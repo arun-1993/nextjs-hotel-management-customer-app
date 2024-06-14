@@ -45,7 +45,7 @@ export default async function Page({ params: { cabinId } }) {
                     </h3>
 
                     <p className="text-lg text-primary-300 mb-10">
-                        {description}
+                        <TextExpander>{description}</TextExpander>
                     </p>
 
                     <ul className="flex flex-col gap-4 mb-7">
