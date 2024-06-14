@@ -1,3 +1,4 @@
+import TextExpander from "@/app/_components/TextExpander";
 import { getCabin, getCabins } from "@/app/_utils/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
@@ -12,6 +13,8 @@ export async function generateStaticParams() {
     const idList = cabins.map((cabin) => ({ cabinId: String(cabin.id) }));
     return idList;
 }
+
+export const revalidate = 3600;
 
 export default async function Page({ params: { cabinId } }) {
     const {
