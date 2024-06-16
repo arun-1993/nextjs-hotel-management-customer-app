@@ -89,6 +89,26 @@ export async function getGuest(email) {
         .eq("email", email)
         .single();
 
+    if (error) {
+        throw new Error("Guest could not be loaded");
+    }
+
+    return data;
+}
+
+export async function getBookings(guestId) {
+    const { data, error } = await supabase
+        .from("bookings")
+        .select(
+            "id, created_at, startDate, endDate, numNights, numGuests, totalPrice, guestId, cabinId, cabins(name, image)",
+        )
+        .eq("guestId", guestId)
+        .order("startDate");
+
+    if (error) {
+        throw new Error("Bookings could not get loaded");
+    }
+
     return data;
 }
 
