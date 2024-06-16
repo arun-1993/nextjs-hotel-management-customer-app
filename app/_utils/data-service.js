@@ -81,3 +81,23 @@ export async function getBookedDatesByCabinId(cabinId) {
 
     return bookedDates;
 }
+
+export async function getGuest(email) {
+    const { data, error } = await supabase
+        .from("guests")
+        .select("*")
+        .eq("email", email)
+        .single();
+
+    return data;
+}
+
+export async function createGuest(newGuest) {
+    const { data, error } = await supabase.from("guests").insert([newGuest]);
+
+    if (error) {
+        throw new Error("Guest could not be created");
+    }
+
+    return data;
+}
