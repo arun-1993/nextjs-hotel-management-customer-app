@@ -44,6 +44,22 @@ export async function getBookedDatesByCabinId(cabinId) {
     return bookedDates;
 }
 
+export async function getBooking(id) {
+    const { data, error } = await supabase
+        .from("bookings")
+        .select(
+            "id, created_at, startDate, endDate, numNights, numGuests, totalPrice, guestId, cabinId, cabins(name, image)",
+        )
+        .eq("id", id)
+        .single();
+
+    if (error) {
+        throw new Error("Booking could not be loaded");
+    }
+
+    return data;
+}
+
 export async function getBookings(guestId) {
     const { data, error } = await supabase
         .from("bookings")
@@ -144,3 +160,16 @@ export async function updateGuest(id, updatedFields) {
 }
 
 // Delete Functions
+
+export async function deleteBooking(id) {
+    const { data, error } = await supabase
+        .from("bookings")
+        .delete()
+        .eq("id", id);
+
+    if (error) {
+        throw new Error("Booking could not be deleted");
+    }
+
+    return data;
+}

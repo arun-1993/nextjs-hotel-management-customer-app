@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import { auth, signIn, signOut } from "./auth";
-import { updateGuest } from "./data-service";
+import { deleteBooking, getBooking, updateGuest } from "./data-service";
 
 export async function signInAction() {
     await signIn("google", { redirectTo: "/account" });
@@ -29,4 +29,19 @@ export async function updateProfileAction(formData) {
     await updateGuest(session.user.id, updateData);
 
     revalidatePath("/account/profile");
+}
+
+export async function deleteReservationAction(id) {
+    const session = await auth();
+
+    if (!session) throw new Error("You must be logged in");
+
+    const booking = await getBooking(id);
+
+    if (booking.guestId !== session.user.id)
+        throw new Error("You are not allowed to delete this booking");
+
+    await deleteBooking(id);
+
+    revalidatePath("/account/reservations");
 }
