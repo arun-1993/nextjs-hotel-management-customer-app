@@ -34,7 +34,7 @@ export default function SideNavigation() {
 
     return (
         <nav className="border-r border-primary-900">
-            <ul className="flex flex-col gap-2 text-lg h-full">
+            <ul className="flex flex-col gap-2 text-lg sticky top-0">
                 {navLinks.map((link) => (
                     <li key={link.name}>
                         <Link
@@ -47,7 +47,7 @@ export default function SideNavigation() {
                     </li>
                 ))}
 
-                <li className="mt-auto">
+                <li>
                     <SignOutButton />
                 </li>
             </ul>
