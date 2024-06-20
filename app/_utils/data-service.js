@@ -48,7 +48,7 @@ export async function getBooking(id) {
     const { data, error } = await supabase
         .from("bookings")
         .select(
-            "id, created_at, startDate, endDate, numNights, numGuests, totalPrice, guestId, cabinId, cabins(name, image)",
+            "id, created_at, startDate, endDate, numNights, numGuests, totalPrice, notes, guestId, cabinId, cabins(name, maxCapacity, image)",
         )
         .eq("id", id)
         .single();
@@ -143,6 +143,22 @@ export async function getSettings() {
 }
 
 // Update Functions
+
+export async function updateBooking(id, updatedFields) {
+    const { data, error } = await supabase
+        .from("bookings")
+        .update(updatedFields)
+        .eq("id", id)
+        .select()
+        .single();
+
+    if (error) {
+        console.error(error);
+        throw new Error("Booking could not be updated");
+    }
+
+    return data;
+}
 
 export async function updateGuest(id, updatedFields) {
     const { data, error } = await supabase
