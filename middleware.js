@@ -3,5 +3,5 @@ import { auth } from "./app/_utils/auth";
 export const middleware = auth;
 
 export const config = {
-    matcher: ["/account"],
+    matcher: ["/account/:path*"],
 };
