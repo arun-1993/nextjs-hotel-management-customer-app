@@ -7,7 +7,7 @@ import { Fragment } from "react";
 import { formatDistanceFromNow } from "../_utils/helper";
 import DeleteReservation from "./DeleteReservation";
 
-export default function ReservationCard({ booking }) {
+export default function ReservationCard({ booking, onDelete }) {
     const {
         id,
         guestId,
@@ -82,7 +82,7 @@ export default function ReservationCard({ booking }) {
                             <span className="mt-1">Edit</span>
                         </Link>
 
-                        <DeleteReservation bookingId={id} />
+                        <DeleteReservation bookingId={id} onDelete={onDelete} />
                     </Fragment>
                 )}
             </div>

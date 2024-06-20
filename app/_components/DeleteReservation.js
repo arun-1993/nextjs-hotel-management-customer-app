@@ -6,12 +6,12 @@ import { Fragment, useTransition } from "react";
 import { deleteReservationAction } from "../_utils/actions";
 import SpinnerMini from "./SpinnerMini";
 
-export default function DeleteReservation({ bookingId }) {
+export default function DeleteReservation({ bookingId, onDelete }) {
     const [pending, startTransition] = useTransition();
 
     function handleDelete() {
         if (confirm("Are you sure you want to delete this reservation?")) {
-            startTransition(() => deleteReservationAction(bookingId));
+            startTransition(() => onDelete(bookingId));
         }
     }
 
