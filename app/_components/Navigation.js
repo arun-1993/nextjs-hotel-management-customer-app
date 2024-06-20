@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Fragment } from "react";
 
 import { auth } from "../_utils/auth";
 
@@ -25,25 +26,36 @@ export default async function Navigation() {
                     </Link>
                 </li>
                 <li>
-                    {session?.user?.image ? (
-                        <Link
-                            className="hover:text-accent-400 transition-colors flex items-center gap-4"
-                            href="/account"
-                        >
-                            <span>Account</span>
-                            <img
-                                className="h-8 rounded-full"
-                                src={session.user.image}
-                                alt={session.user.name}
-                                referrerPolicy="no-referrer"
-                            />
-                        </Link>
+                    {session ? (
+                        <Fragment>
+                            {session?.user?.image ? (
+                                <Link
+                                    className="hover:text-accent-400 transition-colors flex items-center gap-4"
+                                    href="/account"
+                                >
+                                    <span>Account</span>
+                                    <img
+                                        className="h-8 rounded-full"
+                                        src={session.user.image}
+                                        alt={session.user.name}
+                                        referrerPolicy="no-referrer"
+                                    />
+                                </Link>
+                            ) : (
+                                <Link
+                                    className="hover:text-accent-400 transition-colors"
+                                    href="/account"
+                                >
+                                    Account
+                                </Link>
+                            )}{" "}
+                        </Fragment>
                     ) : (
                         <Link
                             className="hover:text-accent-400 transition-colors"
-                            href="/account"
+                            href="/login"
                         >
-                            Account
+                            Log In
                         </Link>
                     )}
                 </li>
