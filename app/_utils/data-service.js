@@ -5,6 +5,20 @@ import { supabase } from "./supabase";
 
 // Create Functions
 
+export async function createBooking(newBooking) {
+    const { data, error } = await supabase
+        .from("bookings")
+        .insert([newBooking])
+        .select()
+        .single();
+
+    if (error) {
+        throw new Error("Booking could not be created");
+    }
+
+    return data;
+}
+
 export async function createGuest(newGuest) {
     const { data, error } = await supabase.from("guests").insert([newGuest]);
 

@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 
 import { auth, signIn, signOut } from "./auth";
 import {
+    createBooking,
     deleteBooking,
     getBooking,
     updateBooking,
@@ -74,4 +75,24 @@ export async function updateReservationAction(formData) {
     revalidatePath("/account/reservations");
     revalidatePath(`/account/reservations/edit/${id}`);
     redirect("/account/reservations");
+}
+
+export async function createReservationAction(bookingData, formData) {
+    const session = await auth();
+
+    if (!session) throw new Error("You must be logged in");
+
+    const newBooking = {
+        ...bookingData,
+        guestId: session.user.id,
+        numGuests: Number(formData.get("numGuests")),
+        notes: formData.get("notes").slice(0, 1000),
+        totalPrice: bookingData.cabinPrice,
+    };
+
+    await createBooking(newBooking);
+
+    revalidatePath(`/cabins/${bookingData.cabinId}`);
+    revalidatePath("/account/reservations");
+    redirect("/thankyou");
 }
